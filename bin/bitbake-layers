@@ -283,10 +283,13 @@ Removes the specified layer from bblayers.conf
             return 1
 
         ignore_layers = []
-        for collection in self.bbhandler.config_data.getVar('BBFILE_COLLECTIONS', True).split():
-            lname = self.bbhandler.config_data.getVar('BBLAYERS_LAYERINDEX_NAME_%s' % collection, True)
-            if lname:
-                ignore_layers.append(lname)
+        try:
+            for collection in self.bbhandler.config_data.getVar('BBFILE_COLLECTIONS', True).split():
+                lname = self.bbhandler.config_data.getVar('BBLAYERS_LAYERINDEX_NAME_%s' % collection, True)
+                if lname:
+                    ignore_layers.append(lname)
+        except Exception, e:
+            pass
 
         if args.ignore:
             ignore_layers.extend(args.ignore.split(','))
